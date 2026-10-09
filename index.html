@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Deep Lectures — unofficial study companion</title>
+<style>
+:root{--ink:#14202b;--crimson:#a51c30;--teal:#0f6e6b;--cream:#f6f1e8;--card:#fffdf9;--line:#e6dccf}
+*{box-sizing:border-box}body{margin:0;font-family:Georgia,serif;background:var(--cream);color:var(--ink)}
+header{background:#111;color:#fff;padding:22px 18px} .wrap{max-width:1040px;margin:0 auto}
+.badge{font-family:system-ui,sans-serif;font-size:12px;letter-spacing:.08em;color:#f3d2d6}
+h1{margin:8px 0;font-size:clamp(28px,4vw,44px)} .sub{color:#eadfD2;max-width:720px}
+nav{display:flex;gap:8px;flex-wrap:wrap;padding:12px 18px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0}
+button,a.btn{font-family:system-ui,sans-serif;border:0;border-radius:999px;padding:8px 12px;cursor:pointer;background:var(--crimson);color:#fff;text-decoration:none;font-size:14px}
+button.ghost,a.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+main{padding:18px} .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+.player{background:#000;border-radius:12px;overflow:hidden;margin:10px 0}
+.player iframe{width:100%;aspect-ratio:16/9;border:0;display:block}
+.note{font-family:system-ui,sans-serif;font-size:13px;color:#555}
+footer{font-family:system-ui,sans-serif;font-size:12px;color:#666;padding:8px 18px 28px}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="badge">UNOFFICIAL STUDY COMPANION · NOT A HARVARD OR MIT CREDENTIAL</div>
+<h1>AI Deep Lectures</h1>
+<p class="sub">10 courses. Each lecture is a real public recording. Play starts it in the page. Open on YouTube if the embed is blocked.</p>
+</div></header>
+nav class="wrap" style="max-width:none">
+<button type="button" onclick="show('catalog')">Catalog</button>
+<button type="button" class="ghost" onclick="show('about')">About</button>
+<a class="btn ghost" href="https://github.com/csantana1991/ai-deep-lectures">GitHub</a>
+</nav>
+<main class="wrap" id="app"></main>
+<footer class="wrap">Public MIT 6.S191 and Stanford CS224N / CS231n recordings. Watching them does not enroll you or confer credit.</footer>
+<script>
+const DL=['II4giR4vOOo','d02VkQ9MP44','pqIcoskUuWs','R8V8CbuxryI','1ij3dweHu-0','ev7cLSd-ySE','alfdI7S6wCY','GvezxUdLrEk','oGpzWAlP5p0','SdTZAMDKrNY','to-lHJfK4pw','HLKo4fJx_7k','ZNodOsz94cc','_HfdncCbMOE','CyCUZAf8xSU'];
+const NLP=['DzpHeXVSC5I','nBor4jfWetQ','HnliVHU2g9U','KVKvde-_MYc','fyc0Jzr74y4','Ba6Fn1-Jsfw','J7ruSOIzhrE','LWMzyfvuehA','DGfCRXuNA2w','35X6zlhoCy4','TO0CqzqiArM','UVX7SYGCKkA','tfVgHsKpRC8','I0tj4Y7xaOQ','dnF463_Ar9I'];
+const CV=['oGpzWAlP5p0','pqIcoskUuWs','2xqkSUhmmXU','NmLK_WQBxB4','uapdILWYTzE','R8V8CbuxryI','SdTZAMDKrNY','SA-v6Op2kL4','5vfIT5LOkR0','II4giR4vOOo','alfdI7S6wCY','Dmm4UG-6jxA','3G5hWM6jqPk','WHvWSYKGMDQ','NHZMfSMAHlo'];
+const courses=[
+{code:'CS182',title:'Advanced Deep Learning',src:'MIT 6.S191',ids:DL},
+{code:'CS183',title:'Optimization for ML',src:'MIT 6.S191',ids:DL},
+{code:'CS184',title:'Neural Networks',src:'MIT 6.S191',ids:DL},
+{code:'CS185',title:'Natural Language Processing',src:'Stanford CS224N 2024',ids:NLP},
+{code:'CS186',title:'Transformers and LLMs',src:'Stanford CS224N 2024',ids:NLP},
+{code:'CS187',title:'Computer Vision',src:'MIT 6.S191 CNNs + Stanford-style CV lectures',ids:CV},
+{code:'CS188',title:'Generative Models',src:'MIT 6.S191',ids:DL},
+{code:'CS189',title:'Multimodal AI',src:'Stanford CS224N multimodal + MIT',ids:NLP},
+{code:'CS190',title:'AI Systems',src:'MIT 6.S191',ids:DL},
+{code:'CS299',title:'Capstone studio',src:'MIT 6.S191 + CS224N',ids:DL}
+];
+const titles=['Foundations','Backprop and training','Convolution','Sequence models','Attention','Transformers','Pretraining','Generative models','Reinforcement learning','Evaluation','Scaling','Alignment','Robustness','Applications','Review'];
+function play(id){
+ document.getElementById('player').innerHTML='<iframe title="Lecture" src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0&autoplay=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+ document.getElementById('player').scrollIntoView({behavior:'smooth',block:'center'});
+}
+function openCourse(i){
+ const c=courses[i];
+ const rows=c.ids.map((id,n)=>'<article class="card"><h3>Lecture '+(n+1)+': '+titles[n]+'</h3><p class="note">'+c.src+' · '+id+'</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" onclick="play(\''+id+'\')">Play lecture</button><a class="btn ghost" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v='+id+'">Open on YouTube</a></div></article>').join('');
+ document.getElementById('app').innerHTML='<p><button class="ghost" type="button" onclick="show(\'catalog\')">Back</button></p><h2>'+c.code+' · '+c.title+'</h2><p class="note">'+c.src+'. Unofficial mapping, not an official syllabus.</p><div class="player" id="player"><iframe title="Lecture" src="https://www.youtube-nocookie.com/embed/'+c.ids[0]+'?rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div><div class="grid">'+rows+'</div>';
+}
+function show(view){
+ if(view==='about'){
+  document.getElementById('app').innerHTML='<h2>About</h2><p>Public study map. Lectures are official MIT and Stanford recordings embedded from YouTube. This page does not grant credit, admission, or a degree.</p>';
+  return;
+ }
+ document.getElementById('app').innerHTML='<div class="grid">'+courses.map((c,i)=>'<article class="card"><h3>'+c.code+'</h3><p>'+c.title+'</p><p class="note">15 lectures · '+c.src+'</p><button type="button" onclick="openCourse('+i+')">Open lectures</button></article>').join('')+'</div>';
+}
+show('catalog');
+</script>
+</body>
+</html>
